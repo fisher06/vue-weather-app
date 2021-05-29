@@ -1,9 +1,9 @@
 <template>
-  <div class="forecast-day-app">
+  <div class="forecast-week-app">
     <transition name="info" mode="out-in" appear>
       <div class="weaher-card">
-        <app-search type="day" />
-        <app-forecast-day />
+        <app-search type="week" />
+        <app-forecast-week />
       </div>
     </transition>
     <app-weather-animation />
@@ -12,7 +12,7 @@
 
 <script>
 import AppSearch from "../components/Search.vue";
-import AppForecastDay from "../components/Forecast/Day.vue";
+import AppForecastWeek from "../components/Forecast/Week.vue";
 import AppWeatherAnimation from "../components/WeatherAnimation.vue";
 import { mapActions } from "vuex";
 
@@ -20,7 +20,7 @@ export default {
   name: "App",
   components: {
     AppSearch,
-    AppForecastDay,
+    AppForecastWeek,
     AppWeatherAnimation
   },
   created() {
@@ -31,7 +31,7 @@ export default {
     fetchData() {
       this.fetchWeatherData({
         city: '',
-        type: 'day'
+        type: 'week'
       });
     }
   }
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.forecast-day-app {
+.forecast-week-app {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,7 +54,7 @@ export default {
     transform: scale(0.5);
   }
   .weaher-card {
-    max-width: 480px;
+    max-width: 720px;
     width: 100%;
     padding: 36px;
     margin: 24px;

@@ -31,6 +31,11 @@
         Cloud : <span class="value">%{{getWeatherMain.clouds}}</span>
       </div>
     </div>
+    <div class="weather-link">
+      <router-link to="/week-forecast">
+        Daily forecast for 7 days
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -119,6 +124,16 @@ export default {
         margin-left: 5px;
         font-weight: 500;
       }
+    }
+  }
+  .weather-link {
+    margin-top: 20px;
+    padding: 5px 8px;
+    border: 2px solid #636363;
+    border-radius: 68px;
+    a {
+      text-decoration: none;
+      color: #131313;
     }
   }
 }
