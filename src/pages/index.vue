@@ -6,7 +6,7 @@
         <app-forecast-day />
       </div>
     </transition>
-    <!--app-weather-animation /-->
+    <app-weather-animation />
   </div>
 </template>
 
