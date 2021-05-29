@@ -6,7 +6,7 @@
         <app-forecast-day />
       </div>
     </transition>
-    <app-weather-animation />
+    <!--app-weather-animation /-->
   </div>
 </template>
 
@@ -53,12 +53,11 @@ export default {
   .weaher-card {
     max-width: 480px;
     width: 100%;
-    padding: 24px;
+    padding: 36px;
     margin: 24px;
     border-radius: 20px;
-    box-shadow: 0 0 70px fade(#131313, 30);
-    background-color: var(#E9E9E9);
-    z-index: 10;
+    background-color: #E9E9E9;
+    z-index: 99;
   }
 }
 </style>
