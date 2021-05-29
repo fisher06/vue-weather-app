@@ -1,5 +1,5 @@
 <template>
   <div>
-    Forecast weather
+    Week weather
   </div>
 </template>
