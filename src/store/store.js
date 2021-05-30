@@ -6,7 +6,9 @@ import forecast from './modules/forecast';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules: {
-      forecast
-    }
+  mutations: {},
+  actions: {},
+  modules: {
+    forecast
+  }
 });

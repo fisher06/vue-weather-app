@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from '../../router'
 
 const state = {
     apiBase: "https://api.openweathermap.org/data/2.5/",
@@ -6,7 +7,8 @@ const state = {
     defaultSearch: "Paris",
     search: "",
     isError: false,
-    weatherData: {}
+    weatherData: {},
+    weekForecast: {}
   };
 
 const getters = {
@@ -20,7 +22,7 @@ const getters = {
     return state.isError;
   },
   getWeatherMain(state) {
-    const { name, temp, feelsLike, tempMin, tempMax, description, icon, info, wind, clouds, humidity } = state.weatherData;
+    const { name, temp, feelsLike, tempMin, tempMax, description, icon, info, wind, clouds, humidity, coord, dt } = state.weatherData;
     return {
       temp,
       feelsLike,
@@ -32,7 +34,9 @@ const getters = {
       wind,
       clouds,
       humidity,
-      name
+      name,
+      coord,
+      dt
     };
   }
 };
@@ -46,46 +50,58 @@ const mutations = {
     },
     ["SET_ERROR"](state, value) {
       state.isError = value;
+    },
+    ['SET_WEEK_FORECAST'](state, value) {
+      state.weekForecast = value.slice(0, 7);
     }
   };
 
 const actions = {
   async fetchWeatherData({ commit, state }, data) {
     try {
-      if (data.city) {
-        commit("SET_SEARCH", data.city);
+      if (data) {
+        commit("SET_SEARCH", data);
       } else {
         commit("SET_SEARCH", state.defaultSearch);
       }
-      if (data.type == "day") {
-        const response = await axios.get(
-          state.apiBase + 'weather?units=metric&q=' + state.search + '&appid=' + state.apiKey
-        );
-        const newWeatherData = {
-          name: response.data.name,
-          temp: Math.round(response.data.main.temp),
-          tempMin: Math.round(response.data.main.temp_min),
-          tempMax: Math.round(response.data.main.temp_max),
-          feelsLike: Math.round(response.data.main.feels_like),
-          description: response.data.weather[0].description,
-          icon: response.data.weather[0].icon,
-          info: response.data.weather[0].main,
-          wind: response.data.wind.speed,
-          humidity: response.data.main.humidity,
-          clouds: response.data.clouds.all,
-          country: response.data.sys.country
-        };
-        commit("SET_FORECAST", newWeatherData);
-        commit("SET_ERROR", false);
-      } else if (data.type == "week") {
-        const response = await axios.get(
-          state.apiBase + 'forecast/daily?units=metric&cnt=7&q=' + state.search + '&appid=' + state.apiKey
-        );
-        console.log(response);
-      }
-
+      const response = await axios.get(
+        state.apiBase + 'weather?units=metric&q=' + state.search + '&appid=' + state.apiKey
+      );
+      const newWeatherData = {
+        name: response.data.name,
+        temp: Math.round(response.data.main.temp),
+        tempMin: Math.round(response.data.main.temp_min),
+        tempMax: Math.round(response.data.main.temp_max),
+        feelsLike: Math.round(response.data.main.feels_like),
+        description: response.data.weather[0].description,
+        icon: response.data.weather[0].icon,
+        info: response.data.weather[0].main,
+        wind: response.data.wind.speed,
+        humidity: response.data.main.humidity,
+        clouds: response.data.clouds.all,
+        country: response.data.sys.country,
+        coord: response.data.coord,
+        dt: response.data.dt
+      };
+      commit("SET_FORECAST", newWeatherData);
+      commit("SET_ERROR", false);
     } catch (error) {
       commit("SET_FORECAST", {});
+      commit("SET_ERROR", true);
+    }
+  },
+  async fetchWeekForecastData({ commit, state }) {
+    if (state.weatherData.coord && state.weatherData.coord.lat && state.weatherData.coord.lon) {
+      try {
+        const response = await axios.get(
+          state.apiBase + 'onecall?lat=' + state.weatherData.coord.lat + '&lon=' + state.weatherData.coord.lon + '&units=metric&appid=' + state.apiKey
+        );
+        commit("SET_WEEK_FORECAST", response.data.daily);
+        router.push('week-forecast');
+      } catch (error) {
+        commit("SET_ERROR", true);
+      }
+    } else {
       commit("SET_ERROR", true);
     }
   }

@@ -17,7 +17,6 @@ import AppWeatherAnimation from "../components/WeatherAnimation.vue";
 import { mapActions } from "vuex";
 
 export default {
-  name: "App",
   components: {
     AppSearch,
     AppForecastDay,
@@ -29,10 +28,7 @@ export default {
   methods: {
     ...mapActions(["fetchWeatherData"]),
     fetchData() {
-      this.fetchWeatherData({
-        city: '',
-        type: 'day'
-      });
+      this.fetchWeatherData('');
     }
   }
 };
@@ -43,7 +39,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   .info-enter-active,
   .info-leave-active {
     transition: all 1s;

@@ -16,7 +16,6 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  props: ['type'],
   data() {
     return {
       search: this.$store.state.forecast.search
@@ -28,10 +27,7 @@ export default {
   methods: {
     ...mapActions(["fetchWeatherData"]),
     getData() {
-      this.fetchWeatherData({
-        city: this.search,
-        type: this.type
-      });
+      this.fetchWeatherData(this.search);
     }
   }
 };
