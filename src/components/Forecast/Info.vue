@@ -1,7 +1,7 @@
 <template>
   <div class="weather-grid">
     <div class="date">
-      {{ new Date(dt * 1000) }}
+      {{ dt }}
     </div>
     <div class="weather-feelsLike">
       Feels like

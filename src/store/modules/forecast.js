@@ -23,6 +23,7 @@ const getters = {
   },
   getWeatherMain(state) {
     const { name, temp, feelsLike, tempMin, tempMax, description, icon, info, wind, clouds, humidity, coord, dt } = state.weatherData;
+    let date = new Date(dt * 1000);
     return {
       temp,
       feelsLike,
@@ -36,7 +37,7 @@ const getters = {
       humidity,
       name,
       coord,
-      dt
+      dt: date
     };
   }
 };
@@ -53,6 +54,9 @@ const mutations = {
     },
     ['SET_WEEK_FORECAST'](state, value) {
       state.weekForecast = value.slice(0, 7);
+      for (let i = 0; i < state.weekForecast.length; i++) {
+        state.weekForecast[i]['dt'] = new Date(state.weekForecast[i]['dt'] * 1000);
+      }
     }
   };
 
