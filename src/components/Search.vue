@@ -61,7 +61,7 @@ export default {
     top: 50%;
     right: 30px;
     transform: translateY(-50%);
-    color: var(#636363);
+    color: #636363;
   }
 }
 </style>

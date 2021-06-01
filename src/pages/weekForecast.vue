@@ -1,7 +1,7 @@
 <template>
   <div class="forecast-week-app">
     <transition name="info" mode="out-in" appear>
-      <div class="weaher-card">
+      <div class="weather-card">
         <app-forecast-week />
         <div class="weather-link">
           <router-link to="/">
@@ -37,7 +37,7 @@ export default {
     opacity: 0;
     transform: scale(0.5);
   }
-  .weaher-card {
+  .weather-card {
     width: 100%;
     padding: 36px;
     margin: 24px;

@@ -1,8 +1,8 @@
 <template>
   <div class="forecast-day-app">
     <transition name="info" mode="out-in" appear>
-      <div class="weaher-card">
-        <app-search type="day" />
+      <div class="weather-card">
+        <app-search />
         <app-forecast-day />
       </div>
     </transition>
@@ -48,7 +48,7 @@ export default {
     opacity: 0;
     transform: scale(0.5);
   }
-  .weaher-card {
+  .weather-card {
     max-width: 480px;
     width: 100%;
     padding: 36px;
